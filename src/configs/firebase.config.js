@@ -6,7 +6,7 @@ import { getAnalytics } from "firebase/analytics";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+export const firebaseConfig = {
   apiKey: "AIzaSyDxuQ-kzyVMIuELyVuvdfgyiH0TIop6s5M",
   authDomain: "auth-service-2022.firebaseapp.com",
   projectId: "auth-service-2022",
@@ -16,7 +16,9 @@ const firebaseConfig = {
   measurementId: "G-VXJN25665B",
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-// eslint-disable-next-line no-unused-vars
-const analytics = getAnalytics(app);
+export function initFirebase() {
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  // eslint-disable-next-line no-unused-vars
+  const analytics = getAnalytics(app);
+}

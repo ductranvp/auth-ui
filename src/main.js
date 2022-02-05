@@ -2,8 +2,7 @@
 import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
-import store from "./store";
-import "./config/firebase.js";
+import store from "./stores";
 
 /* Libraries */
 import ElementPlus from "element-plus";
@@ -15,10 +14,20 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import "./assets/icons/fontawesome.js";
 import "./assets/styles/index.scss";
 
-const app = createApp(App);
+/* Custom configs */
+import { initFirebase } from "./configs/firebase.config.js";
+import { createRouterGuard } from "./router/guard.js";
+import { globalMixin } from "./mixins/global.mixin.js";
 
-app.use(store).use(router).use(ElementPlus, { locale: vi });
+function bootstrap() {
+  createRouterGuard(router);
+  initFirebase();
 
-app.component("font-awesome-icon", FontAwesomeIcon);
+  const app = createApp(App);
+  app.use(store).use(router).use(ElementPlus, { locale: vi });
+  app.mixin(globalMixin);
+  app.component("font-awesome-icon", FontAwesomeIcon);
+  app.mount("#app");
+}
 
-app.mount("#app");
+bootstrap();

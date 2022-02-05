@@ -8,7 +8,7 @@
       </el-input>
     </el-form-item>
     <el-form-item>
-      <el-button @click="doLogin">Login</el-button>
+      <el-button @click="doLogin" type="primary">Login</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -18,7 +18,7 @@ import { ref } from "vue";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 export default {
   name: "EmailPasswordLogin",
-  setup() {
+  setup(props, context) {
     const model = ref({ email: null, password: null });
     function doLogin() {
       if (!model.value.email || model.value.email.length < 4) {
@@ -35,8 +35,7 @@ export default {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(userCredential);
-          console.log(user);
+          context.emit("submit", user);
         })
         .catch((error) => {
           const errorCode = error.code;

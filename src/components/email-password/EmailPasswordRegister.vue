@@ -8,7 +8,7 @@
       </el-input>
     </el-form-item>
     <el-form-item>
-      <el-button @click="doRegister">Register</el-button>
+      <el-button @click="doRegister" type="primary">Register</el-button>
     </el-form-item>
   </el-form>
 </template>

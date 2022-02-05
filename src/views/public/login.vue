@@ -19,7 +19,7 @@
 
 <script>
 export default {
-  name: "Home",
+  name: "Login",
   data() {
     return {
       functions: [
