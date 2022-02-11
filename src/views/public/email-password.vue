@@ -27,7 +27,6 @@ import EmailPasswordLogin from "../../components/email-password/EmailPasswordLog
 import { ref, reactive } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { setToken } from "../../utils/token.util.js";
 
 export default {
   name: "EmailPassword",
@@ -47,15 +46,11 @@ export default {
     }
 
     function handleLoginSubmit(user) {
-      console.log(user);
-      setToken(user.accessToken, true);
-      console.log(store);
       store.commit("userModule/SET_USER", user);
       router.push({ name: "Home" });
     }
 
     function handleRegisterSubmit(user) {
-      setToken(user.accessToken, true);
       store.commit("userModule/SET_USER", user);
       router.push({ name: "Home" });
     }

@@ -1,6 +1,7 @@
 import axiosModule from "axios";
 import { getToken } from "../utils/token.util.js";
 import { logout } from "../utils/auth.util.js";
+import { showMessage } from "../utils/message.util.js";
 
 const baseURL = process.env.APP_API_ENDPOINT;
 
@@ -15,7 +16,6 @@ axios.interceptors.request.use(
     return config;
   },
   function (error) {
-    // Do something with request error
     return Promise.reject(error);
   }
 );
@@ -25,9 +25,8 @@ axios.interceptors.response.use(
     return response;
   },
   async function (error) {
-    console.log("abc");
     if (error.message === "Network Error") {
-      // Show error message
+      showMessage("Network Error", "error");
     }
     if (error.response?.status === 401) {
       await logout();

@@ -5,6 +5,7 @@ const PublicRoutes = [
     component: () => import("../../views/public/login.vue"),
     meta: {
       title: "Login",
+      authenticatedRedirect: "Home",
     },
   },
   {
@@ -13,6 +14,7 @@ const PublicRoutes = [
     component: () => import("../../views/public/email-password.vue"),
     meta: {
       title: "Email Password",
+      authenticatedRedirect: "Home",
     },
   },
   {

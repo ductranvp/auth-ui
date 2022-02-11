@@ -18,5 +18,6 @@ export const actions = {
   async initUserStore({ commit }) {
     const user = await userService.getCurrentUserInfo();
     commit("SET_USER", user);
+    throw new Error();
   },
 };

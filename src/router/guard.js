@@ -1,4 +1,4 @@
-import { getToken } from "../utils/token.util.js";
+import { getToken, getTokenAsync } from "../utils/token.util.js";
 
 import store from "../stores";
 import { hasAuthority } from "../utils/auth.util.js";
@@ -7,7 +7,6 @@ export function createRouterGuard(
   router,
   {
     loginPage = "Login",
-    homePage = "Home",
     notFoundPage = "NotFound",
     forbiddenPage = "Forbidden",
   } = {}
@@ -21,36 +20,55 @@ export function createRouterGuard(
       return;
     }
 
+    // set page title
     if (to.meta.title) {
       document.title = to.meta.title;
     }
 
-    const token = getToken();
+    const token = getToken() || (await getTokenAsync());
 
-    // If route require roles
+    // private routes
     if (to.meta.roles && to.meta.roles.length) {
+      // dont have token, must login
       if (!token) {
         next({ name: loginPage });
       } else {
+        // have token but user info is null
         if (!store.state.userModule.user) {
-          await store.dispatch("userModule/initUserStore");
+          try {
+            // if can't get user info, just go to login page
+            await store.dispatch("userModule/initUserStore");
+          } catch (e) {
+            next({ name: loginPage });
+          }
         }
+
+        // check if user has required roles
         if (hasAuthority(to.meta.roles)) {
           next();
         } else {
           next({ name: forbiddenPage });
         }
       }
-    } else {
-      // If route doesn't require route
-
-      // If current page is login page & found a token
-      if (to.name === loginPage && token) {
-        // If don't have user info
+    }
+    // public routes
+    else {
+      // if found a token
+      if (token) {
         if (!store.state.userModule.user) {
-          await store.dispatch("userModule/initUserStore");
+          try {
+            // if can't get user info, just go to login page
+            await store.dispatch("userModule/initUserStore");
+          } catch (e) {
+            next({ name: loginPage });
+          }
         }
-        next({ name: homePage });
+        // if route has redirect when user is authenticated
+        if (to.meta && to.meta.authenticatedRedirect) {
+          next({ name: to.meta.authenticatedRedirect });
+        } else {
+          next();
+        }
       } else {
         next();
       }

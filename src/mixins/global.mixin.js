@@ -1,15 +1,18 @@
 import { getAuth } from "firebase/auth";
+import { logout } from "../utils/auth.util.js";
 export const globalMixin = {
   data() {
     return {};
   },
   computed: {
     currentUser() {
-      console.log("abc");
-      const auth = getAuth();
-      const user = auth.currentUser;
-      console.log(user);
+      return getAuth().currentUser;
     },
   },
-  methods: {},
+  methods: {
+    async logout() {
+      await logout();
+      await this.$router.push({ name: "Login" });
+    },
+  },
 };

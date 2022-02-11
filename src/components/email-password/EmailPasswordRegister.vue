@@ -18,7 +18,7 @@ import { ref } from "vue";
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 export default {
   name: "EmailPasswordRegister",
-  setup() {
+  setup(props, context) {
     const model = ref({ email: null, password: null });
     function doRegister() {
       if (!model.value.email || model.value.email.length < 4) {
@@ -39,8 +39,7 @@ export default {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(userCredential);
-          console.log(user);
+          context.emit("submit", user);
         })
         .catch((error) => {
           const errorCode = error.code;
