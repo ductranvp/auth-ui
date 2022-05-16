@@ -4,9 +4,9 @@ pipeline {
         node "16.15.0"
     }
     environment {
-        APP_MODE=production
+        APP_MODE='production'
         APP_PORT=3000
-        APP_API_ENDPOINT=http://localhost:4000
+        APP_API_ENDPOINT='http://localhost:4000'
         DOCKER_CREDENTIALS=credentials('dockerhub')
     }
     stages {
