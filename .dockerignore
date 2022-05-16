@@ -8,8 +8,6 @@ docker-compose-production.yaml
 
 .gitlab-ci.yml
 
-Dockerfile
-
 # Created by .ignore support plugin (hsz.mobi)
 ### Node template
 # Logs
