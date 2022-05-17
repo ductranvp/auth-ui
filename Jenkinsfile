@@ -29,7 +29,7 @@ pipeline {
       steps {
         input 'Deploy?'
         sh 'docker stop $DOCKER_USER/auth-ui || true && docker rm $DOCKER_USER/auth-ui || true'
-        sh 'docker run -p 80:80 -d $DOCKER_USER/auth-ui'
+        sh 'docker run -p 80:80 -d --restart always $DOCKER_USER/auth-ui'
       }
     }
   }
