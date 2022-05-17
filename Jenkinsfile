@@ -1,27 +1,25 @@
 pipeline {
-    agent { label "tvduc1" }
-    tools {
-        node "16.15.0"
+  agent any
+
+  tools { nodejs 'node' }
+
+  environment {
+    DOCKER_USER = 'ductranvp'
+    DOCKER_PASSWORD = '0d138f7b-bcb4-4e89-920a-e89a84c3bf80'
+  }
+
+  stages {
+    stage('Build') {
+      steps {
+        sh 'docker build -t auth-ui:$BUILD_NUMBER .'
+      }
     }
-    environment {
-        APP_MODE='production'
-        APP_PORT=3000
-        APP_API_ENDPOINT='http://localhost:4000'
-        DOCKER_CREDENTIALS=credentials('dockerhub')
+
+    stage('Delivery') {
+      steps {
+        sh 'docker login -u $DOCKER_USER -p $DOCKER_PASSWORD'
+        sh 'docker push auth-ui:$BUILD_NUMBER'
+      }
     }
-    stages {
-        stage("build") {
-            steps {
-                echo 'BUILD EXECUTION STARTED'
-                sh 'docker build -t auth-ui:${BUILD_NUMBER}'
-            }
-        }
-        stage('push') {
-            agent any
-            steps {
-                sh "echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin"
-                sh 'docker push auth-ui:${BUILD_NUMBER}'
-            }
-        }
-    }
+  }
 }
