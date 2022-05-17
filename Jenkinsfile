@@ -13,7 +13,7 @@ pipeline {
   stages {
     stage('Build') {
       steps {
-        sh 'docker build -t auth-ui:$BUILD_NUMBER .'
+        sh 'docker build -t $DOCKER_USER/auth-ui:$BUILD_NUMBER .'
       }
     }
 
