@@ -4,6 +4,7 @@ import { logout } from "../utils/auth.util.js";
 import { showMessage } from "../utils/message.util.js";
 
 const baseURL = process.env.APP_API_ENDPOINT;
+console.log(process.env.APP_API_ENDPOINT);
 
 const axios = axiosModule.create({
   baseURL,

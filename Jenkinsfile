@@ -6,6 +6,8 @@ pipeline {
   environment {
     DOCKER_USER = 'ductranvp'
     DOCKER_PASSWORD = '0d138f7b-bcb4-4e89-920a-e89a84c3bf80'
+    APP_MODE='production'
+    APP_API_ENDPOINT='http://localhost:4000'
   }
 
   stages {

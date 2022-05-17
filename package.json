@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "env-cmd -f ./.env.development vite",
-    "build": "env-cmd -f ./.env.production vite build",
+    "build": "vite build",
     "preview": "env-cmd -f ./.env.production vite preview",
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore --fix src"
   },
