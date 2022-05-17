@@ -19,6 +19,7 @@ pipeline {
 
     stage('Delivery') {
       steps {
+        sh 'docker logout'
         sh 'echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin'
         sh 'docker push auth-ui:$BUILD_NUMBER'
       }
